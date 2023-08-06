@@ -3,10 +3,14 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7789.h>
 #include <SPI.h>
-#include <Adafruit_TinyUSB.h>
 #include "key_config.h"
 #include "defines.h"
 #include <queue>
+
+#include "USB.h"
+#include "USBHIDKeyboard.h"
+USBHIDKeyboard Keyboard;
+
 
 Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 std::queue<uint8_t> pressQueue;
@@ -30,6 +34,9 @@ void setup()
   tft.init(135, 240);
   tft.setRotation(1);
   tft.fillScreen(ST77XX_BLACK);
+
+  Keyboard.begin();
+  USB.begin();
 }
 
 void testI2C();
@@ -80,6 +87,10 @@ void testI2C(){
       tft.setTextSize(3);
       tft.print("0x");
       tft.print(dump, HEX);
+
+      if(BUTTON_PRESSED | 0x01){
+        Keyboard.write('P');
+      }
     }
   }
 }
