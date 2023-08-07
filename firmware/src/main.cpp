@@ -88,8 +88,17 @@ void testI2C(){
       tft.print("0x");
       tft.print(dump, HEX);
 
-      if(BUTTON_PRESSED | 0x01){
-        Keyboard.write('P');
+      if(dump == (BUTTON_PRESSED | 0x04)){
+        Keyboard.write(KEY_LEFT_ARROW);
+      }
+      if(dump == (BUTTON_PRESSED | 0x01)){
+        Keyboard.write(KEY_RIGHT_ARROW);
+      }
+      if(dump == (BUTTON_PRESSED | 0x02)){
+        Keyboard.write(KEY_UP_ARROW);
+      }
+      if(dump == (BUTTON_PRESSED | 0x03)){
+        Keyboard.write(KEY_DOWN_ARROW);
       }
     }
   }
